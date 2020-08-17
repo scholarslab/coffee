@@ -15,7 +15,7 @@
             $(this).find(".amount").removeClass("invisible");
             if (unit == "g"){
               // Water already measured by mass
-              $(this).find(".amount > td").html((water / ratio).toFixed(2) + "g for "+water+"ml water");
+              $(this).find(".amount > td").html((water / ratio).toFixed(2) + "g for "+water+"g water");
             }
             else if (unit == "ml"){
               // Need to convert volume of water to mass using the density of water at 17C
