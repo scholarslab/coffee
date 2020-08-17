@@ -1,2 +1,1 @@
-# coffee
-coffee.scholarslab.org
+# Scholars' Lab Coffee Project quick guide

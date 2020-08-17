@@ -1,0 +1,674 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">  
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+  <title>Scholars' Lab Coffee Cheat Sheet</title>
+  <script>
+    function update() {      
+      var water = document.getElementById("water").value;
+      if (water){
+        var unit = $("input[name=unit]:checked").attr('id');
+        $(".table.specs").each(function(){
+            var ratio = parseInt($(this).find(".ratio > td").text().split(":")[0]);
+            $(this).find(".amount").removeClass("invisible");
+            if (unit == "g"){
+              // Water already measured by mass
+              $(this).find(".amount > td").html((water / ratio).toFixed(2) + "g for "+water+"ml water");
+            }
+            else if (unit == "ml"){
+              // Need to convert volume of water to mass using the density of water at 17C
+              $(this).find(".amount > td").html((water * 0.9987 / ratio).toFixed(2) + "g for "+water+"ml water");
+            }
+            else if (unit == "us"){
+              // Working backwards from the metric density value above, figure out the equivalent ratio for fl oz to oz at 17C.
+              $(this).find(".amount > td").html((water*1.0418 / ratio).toFixed(2) + "oz for "+water+"fl oz water");
+            }
+            else {
+              // A "cup" is usually 4 fluid ounces.
+              $(this).find(".amount > td").html((water*1.0418*4 / ratio).toFixed(2) + "oz for "+water+" (coffee) cups water");
+            }
+        });
+      }
+    }
+  </script>
+</head>
+<body>
+<div id="test"></div>
+<div class = "container-md">
+  <div class="row">
+    <section class="border p-3">
+      <img src="coffee_tn.jpg" class="rounded float-right" alt="coffee beans macro shot">  
+      <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
+        <div class="input-group">
+          <input type="text" id="water" class="form-control" placeholder="Water" aria-label="water volume" aria-describedby="btnGroupAddon" onchange="update();"/>
+        </div>
+        <div class="btn-group">
+          <input type="radio" class="btn-check" name="unit" id="g" autocomplete="off" onclick="update();" checked/>
+          <label class="btn btn-primary" for="g" data-toggle="tooltip" data-placement="bottom" title="At 17°C.">Grams</label>
+        
+          <input type="radio" class="btn-check" name="unit" id="ml" autocomplete="off" onclick="update();"/>
+          <label class="btn btn-primary" for="ml" data-toggle="tooltip" data-placement="bottom" title="At 17°C.">Mililiters</label>
+        
+          <input type="radio" class="btn-check" name="unit" id="us" autocomplete="off" onclick="update();"/>
+          <label class="btn btn-primary" for="us" data-toggle="tooltip" data-placement="bottom" title="US, not Imperial fluid ounce. At 17°C.">Fluid Ounces</label>
+
+          <input type="radio" class="btn-check" name="unit" id="cup" autocomplete="off" onclick="update();"/>
+          <label class="btn btn-primary" for="cup" data-toggle="tooltip" data-placement="bottom" title="DANGER: A US 'Coffee Cup' is usually 4 US fluid ounces, but can basically be anything.">"Cups"</label>
+        </div>
+      </div>
+    </section>
+  </div>
+  <div class="row">
+    <div
+      class="flex-row nav nav-pills text-center"
+      id="v-pills-tab"
+      role="tablist"
+      aria-orientation="vertical"
+    >
+      <a class="nav-link active"
+        id="b-ap-tab"
+        data-toggle="pill"
+        href="#b-ap"
+        role="tab"
+        aria-controls="aeropress tab"
+        aria-selected="true"
+        >Aeropress</a
+      >
+      <a
+        class="nav-link"
+        id="b-ch-tab"
+        data-toggle="pill"
+        href="#b-ch"
+        role="tab"
+        aria-controls="chemex tab"
+        aria-selected="false"
+        >Chemex</a
+      >
+      <a
+        class="nav-link"
+        id="b-cb-tab"
+        data-toggle="pill"
+        href="#b-cb"
+        role="tab"
+        aria-controls="cold brew tab"
+        aria-selected="false"
+        >Cold Brew</a
+      >
+      <a
+        class="nav-link"
+        id="b-fp-tab"
+        data-toggle="pill"
+        href="#b-fp"
+        role="tab"
+        aria-controls="french press tab"
+        aria-selected="false"
+        >French Press</a
+      >
+      <a
+        class="nav-link"
+        id="b-hv-tab"
+        data-toggle="pill"
+        href="#b-hv"
+        role="tab"
+        aria-controls="hario v60 tab"
+        aria-selected="false"
+        >Hario V60</a
+      >
+      <a
+        class="nav-link"
+        id="b-mp-tab"
+        data-toggle="pill"
+        href="#b-mp"
+        role="tab"
+        aria-controls="immersion tab"
+        aria-selected="false"
+        >Moka Pot</a
+      >
+      <a
+        class="nav-link"
+        id="b-po-tab"
+        data-toggle="pill"
+        href="#b-po"
+        role="tab"
+        aria-controls="melitta tab"
+        aria-selected="false"
+        >Pour-over (Melitta, Bee House)</a
+      >
+      <a
+        class="nav-link"
+        id="b-si-tab"
+        data-toggle="pill"
+        href="#b-si"
+        role="tab"
+        aria-controls="siphon tab"
+        aria-selected="false"
+        >Siphon</a
+      >
+      <a
+        class="nav-link"
+        id="b-ku-tab"
+        data-toggle="pill"
+        href="#b-ku"
+        role="tab"
+        aria-controls="kureg tab"
+        aria-selected="false"
+        >Kureg</a
+      >
+    </div>
+      <!-- Tab navs -->
+  </div>
+  <div class="row">
+    <section class="border p-3">
+    <!-- Tab content -->
+    <div class="tab-content" id="content">
+      
+      <div
+        class="tab-pane fade show active content"
+        id="b-ap"
+        role="tabpanel"
+        aria-labelledby="aeropress content"
+      >
+        <section>
+          <table class="table specs">
+            <tbody>
+              <tr class="brewer_name">
+                <th>Brewer</th>
+                <td class="table-light">Aeropress</td>
+              </tr>
+              <tr class="grind">
+                <th>Grind size</th>
+                <td class="table-light">Fine | "table salt" | Baratza Virtuoso setting 12</td>
+              </tr>
+              <tr class="temp">
+                <th>Water temperature</th>
+                <td class="table-light">90-96°C (194-205°F)</td>
+              </tr>
+              <tr class="ratio">
+                <th>Brew Ratio</th>
+                <td class="table-light">13:1</td>
+              </tr>
+              <tr class="amount invisible">
+                <th>Grind amount</th>
+                <td class="table-light"></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+        <section>
+          <h3>Instructions (standard)</h3>
+          <ol>
+            <li>Heat a bit more water than you're going to brew to 95°C.</li>
+            <li>Insert paper filter into holder.</li>
+            <li>Wet and preheat brewer, filter, and receiving vessel with hot water.</li>
+            <li>Screw holder with filter onto the brewer and place brewer onto receiving vessel.</li>
+            <li>Dump grounds into brewer.</li>
+            <li>Quickly pour water evenly over grounds (the numbers on the side are not cup measures).</li>
+            <li>Stir slurry briefly.</li>
+            <li>Place plunger on top of the brewer to prevent excess dripping.</li>
+            <li>Wait 1:30.</li>
+            <li>Push plunger down with even pressure.</li>
+          </ol>
+          <h3>Instructions (inverted variation)</h3>
+          <ol>
+            <li>Heat a bit more water than you're going to brew to 95°C.</li>
+            <li>Wet and preheat brewer, filter, and receiving vessel with hot water.</li>
+            <li>Insert plunger into brewer to the "4" line.</li>
+            <li>Dump gounds into brewer.</li>
+            <li>Pour a 2:1 ratio water evenly over grounds.</li>
+            <li>Wait 30 seconds for bloom to subside.</li>
+            <li>Pour remaining water evenly over grounds.</li>
+            <li>Stir slurry briefly.</li>
+            <li>Wait 1:30.</li>
+            <li>Screw holder with filter onto the top of the brewer.</li>
+            <li>Invert brewer onto the receiving vessel.</li>
+            <li>Push plunger down with even pressure.</li>
+          </ol>
+        </section>
+        <section>
+          <h3>Video</h3>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/pmjPjZZRhNQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </section>
+        <section>
+          <h3>Notes</h3>
+          <ul>
+            <li><a href="https://aeropress.com/wp-content/uploads/2019/10/80INST-Rev.J-ENG.pdf">Official instruction booklet (aeropress.com)</a></li>
+            <li><a href="https://handground.com/grind/66-recipes-for-amazing-aeropress-coffee">"The Art Of Aeropress: Make 10 Kinds Of Coffee Like Pro Baristas" (handground.com)</a></li>
+          </ul>
+        </section>
+      </div>
+      
+      <div
+        class="tab-pane fade"
+        id="b-ch"
+        role="tabpanel"
+        aria-labelledby="chemex content"
+      >
+      <section>
+        <table class="table specs">
+          <tbody>
+            <tr class="brewer_name">
+              <th>Brewer</th>
+              <td class="table-light">Chemex (with Chemex filter)</td>
+            </tr>
+            <tr class="grind">
+              <th>Grind size</th>
+              <td class="table-light">Medium | "kosher salt" | Baratza setting 20</td>
+            </tr>
+            <tr class="temp">
+              <th>Water temperature</th>
+              <td class="table-light">90-96°C (194-205°F)</td>
+            </tr>
+            <tr class="ratio">
+              <th>Brew Ratio</th>
+              <td class="table-light">15:1</td>
+            </tr>
+            <tr class="amount invisible">
+              <th>Grind amount</th>
+              <td class="table-light"></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <section>
+        <h3>Instructions</h3>
+        <ol>
+          <li>Fold and place Chemex filter into the brewer with the thicker side over the pouring channel.</li>
+          <li>Rinse filter with hot water for even seal. Pour out water.</li>
+          <li>Add grounds to brewer.</li>
+          <li>Saturate grounds (with a 3:1 ratio of water:grounds) and lightly stir with a chopstick.</li>
+          <li>Wait 30 seconds for the bloom.</li>
+          <li>Pour in remaining water, slowly and in a spiral or wiggling motion evenly over grounds.</li>
+          <li>Remove and allow filter to drain out.</li>
+          <li>Lightly swirl brewer.</li>
+        </ol>
+      </section>
+      <section>
+        <h3>Video</h3>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/ikt-X5x7yoc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </section>
+      <section>
+        <h3>Notes</h3>
+        <ul>
+          <li><a href="https://perfectdailygrind.com/2015/05/chemex-the-history-brewing-guide/">"Chemex – The History & Brewing Guide" (perfectdailygrind.com)</a></li>
+          <li><a href="https://www.stumptowncoffee.com/blog/a-brief-history-of-dr-chemex">"A Brief History of Dr. Chemex" (stumptowncoffee.com)</a></li>
+        </ul>
+      </section>
+      </div>
+      <div
+        class="tab-pane fade"
+        id="b-cb"
+        role="tabpanel"
+        aria-labelledby="cold brew content"
+      >
+      <section>
+        <table class="table specs">
+          <tbody>
+            <tr class="brewer_name">
+              <th>Brewer</th>
+              <td class="table-light">Immersion Cold Brew</td>
+            </tr>
+            <tr class="grind">
+              <th>Grind size</th>
+              <td class="table-light">Very coarse | "coarse sea salt" | Baratza setting 35</td>
+            </tr>
+            <tr class="temp">
+              <th>Water temperature</th>
+              <td class="table-light">90-96°C (194-205°F) initial "hot bloom"</td>
+            </tr>
+            <tr class="ratio">
+              <th>Brew Ratio</th>
+              <td class="table-light">6:1</td>
+            </tr>
+            <tr class="amount invisible">
+              <th>Grind amount</th>
+              <td class="table-light"></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <section>
+        <h3>Instructions</h3>
+        <ol>
+          <li>Dump grounds into vessel, filter bag, or french press.</li>
+          <li>Optional hot bloom: Saturate grounds with a 2:1 ratio of hot water to coffee. Stir and wait 60 seconds.</li>
+          <li>Add remaining (room temperature) water to slurry.</li>
+          <li>Steep for 16-24 hours at room temperature.</li>
+          <li>Filter slurry. Depending on method, double filter if fine grounds remain.</li>
+          <li>Refrigerate coffee.</li>
+          <li>Add water to taste.</li>
+        </ol>
+      </section>
+      <section>
+        <h3>Video</h3>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/v_qHWgmsPrw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </section>
+      <section>
+        <h3>Notes</h3>
+        <ul>
+          <li><a href="https://handground.com/grind/beginners-guide-immersion-cold-brew-coffee">"The Beginner’s Guide To Immersion Cold Brew Coffee" (handground.com)</a></li>
+        </ul>
+      </section>
+      </div>
+      <div
+        class="tab-pane fade"
+        id="b-fp"
+        role="tabpanel"
+        aria-labelledby="french press content"
+      >
+      <section>
+        <table class="table specs">
+          <tbody>
+            <tr class="brewer_name">
+              <th>Brewer</th>
+              <td class="table-light">French Press</td>
+            </tr>
+            <tr class="grind">
+              <th>Grind size</th>
+              <td class="table-light">Coarse | "sea salt" | Baratza setting 30</td>
+            </tr>
+            <tr class="temp">
+              <th>Water temperature</th>
+              <td class="table-light">90-96°C (194-205°F)</td>
+            </tr>
+            <tr class="ratio">
+              <th>Brew Ratio</th>
+              <td class="table-light">12:1</td>
+            </tr>
+            <tr class="amount invisible">
+              <th>Grind amount</th>
+              <td class="table-light"></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <section>
+        <h3>Instructions</h3>
+        <ol>
+		  <li>Pre-heat brewer by rinsing with hot water.</li>
+          <li>Add grounds into brewer.</li>
+          <li>Saturate the grounds with a 2:1 ratio of water and stir.</li>
+		      <li>Wait 30 seconds for the grounds to bloom.</li>
+          <li>Pour remaining water to the slurry.</li>
+          <li>Replace filter and lid, but do not press.</li>
+          <li>Allow coffee to steep for four minutes.</li>
+          <li>Lightly press plunger down until it is just above the level of the grounds. Do force the filter against the grounds.</li>
+		      <li>Pour coffee gently, try not to disturb the coffee fines at the bottom of the brewer.</li>
+        </ol>
+      </section>
+      <section>
+        <h3>Video</h3>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/st571DYYTR8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </section>
+      <section>
+        <h3>Notes</h3>
+        <ul>
+          <li><a href="https://bluebottlecoffee.com/preparation-guides/french-press">"French Press: Sure-footed and sincere" (bluebottlecoffee.com)</a></li>
+        </ul>
+      </section>
+      </div>
+      <div
+        class="tab-pane fade"
+        id="b-hv"
+        role="tabpanel"
+        aria-labelledby="hario v60 content"
+      >
+      <section>
+        <table class="table specs">
+          <tbody>
+            <tr class="brewer_name">
+              <th>Brewer</th>
+              <td class="table-light">Hario V60</td>
+            </tr>
+            <tr class="grind">
+              <th>Grind size</th>
+              <td class="table-light">Medium-Fine | "table salt" | Baratza setting 14</td>
+            </tr>
+            <tr class="temp">
+              <th>Water temperature</th>
+              <td class="table-light">90-96°C (194-205°F)</td>
+            </tr>
+            <tr class="ratio">
+              <th>Brew Ratio</th>
+              <td class="table-light">15:1</td>
+            </tr>
+            <tr class="amount invisible">
+              <th>Grind amount</th>
+              <td class="table-light"></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <section>
+        <h3>Instructions (standard)</h3>
+        <ol>
+		      <li>Insert the V60 filter into the brewer and press the filter fold against the side.</li>
+          <li>Wet the filter and pre-heat the vessel with hot water. Discard water.</li>
+          <li>Add grounds to the brewer.</li>
+          <li>Saturate the grounds evenly with a 3:1 ratio of water.</li>
+          <li>Wait 30 seconds for the grounds to bloom.</li>
+          <li>Using a gooseneck kettle, pour the remaining water slowly and continuously in a spiral pattern. Cover the grounds wholly, but stay more on the edges than the center.</li>
+          <li>Remove the brewer and allow it to drain.</li>
+          <li>Bring the vessel to your nose and smell the coffee. Think  on the hundreds of years of global coffee culture that brought you to this moment.</li>
+        </ol>
+		<h3>Instructions ("4-6 method")</h3>
+        <ol>
+		  <li>Insert the V60 filter into the brewer and press the filter fold against the side.</li>
+          <li>Wet the filter and pre-heat the vessel with hot water. Discard water.</li>
+          <li>Add grounds to the brewer.</li>
+          <li>Use 40% of the total water in two distinct pours. Pouring more in the first (blooming) pour will emphasize acidity; more in the second will excentuate sweetness. Wait 45 seconds after the first pour for the grounds to bloom. Afterwards, allow all the water to drain into the vessel completely for each pour.</li>
+		      <li>Divide the remaining 60% of the water into equal pours. A higher number of pours (e.g. 3) will increase the strength of the final coffee while a lower number (e.g. 1) will keep it weaker.</li>
+          <li>Remove the brewer and allow it to drain.</li>
+        </ol>
+		Example (300g total water):
+		<ul>
+		  <li>1st pour 50g (bloom 45 seconds)</li>
+          <li>2nd pour 60g</li>
+		  <li>3rd pour 60g</li>
+		  <li>4th pour 60g</li>
+		  <li>5th pour 60g</li>
+        </ul>
+      </section>
+      <section>
+        <h3>Video</h3>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/wmCW8xSWGZY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </section>
+      <section>
+        <h3>Notes</h3>
+        <ul>
+          <li><a href="https://prima-coffee.com/learn/article/brewing-guides/v60-brew-method-review/28774">"V60 Brew Method Review" (prima-coffee.com)</a></li>
+		  <li><a href="https://kurasu.kyoto/blogs/kurasu-journal/2016-world-brewers-cup-champion-tetsu-kasuya">"Winning receipe of 2016 World Brewers Cup Champion Tetsu Kasuya" (kurasu.kyoto)</a></li>
+        </ul>
+      </section>
+      </div>
+      <div
+        class="tab-pane fade"
+        id="b-mp"
+        role="tabpanel"
+        aria-labelledby="moka pot content"
+      >
+      <section>
+        <table class="table specs">
+          <tbody>
+            <tr class="brewer_name">
+              <th>Brewer</th>
+              <td class="table-light">Bialetti Moka Pot</td>
+            </tr>
+            <tr class="grind">
+              <th>Grind size</th>
+              <td class="table-light">Fine | "table salt" | Baratza setting 10</td>
+            </tr>
+            <tr class="temp">
+              <th>Water temperature</th>
+              <td class="table-light">Preheated to 95°C (Moka Express), room temperature (Brikka)</td>
+            </tr>
+			<tr class="ratio">
+              <th>Brew Ratio</th>
+              <td class="table-light">7:1</td>
+            </tr>
+            <tr class="amount invisible">
+              <th>Grind amount</th>
+              <td class="table-light"></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <section>
+        <h3>Instructions</h3>
+        <ol>
+          <li>Pour water into the brewer bottom chamber, making sure to stay below the fill line (or the relief valve).</li>
+          <li>Add grounds to the filter basket and drop basket on top of the brewer bottom chamber. Do not tamp.</li>
+          <li>Screw top chamber on.</li>
+          <li>Move to stovetop on medium heat.</li>
+          <li>Wait for the coffee to errupt from the fountain in the upper chamber.</li>
+          <li>When the brewer produces a gurgling sound once the water below is exhuasted, remove from heat.</li>
+          <li>Rinse lower section under tap to cool the brewer and stop the brewing.</li>
+        </ol>
+      </section>
+      <section>
+        <h3>Video</h3>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/ObkjKlJe68A" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </section>
+      <section>
+        <h3>Notes</h3>
+        <ul>
+          <li><a href="https://www.home-barista.com/brewing/secrets-of-moka-pot-how-to-video-t30707.html">"The secrets of the moka pot - How to video" (home-barista.com)</a></li>
+        </ul>
+      </section>
+      </div>
+      <div
+        class="tab-pane fade"
+        id="b-po"
+        role="tabpanel"
+        aria-labelledby="pour-over content"
+      >
+      <section>
+        <table class="table specs">
+          <tbody>
+            <tr class="brewer_name">
+              <th>Brewer</th>
+              <td class="table-light">Pour-over (Melitta, Bee House)</td>
+            </tr>
+            <tr class="grind">
+              <th>Grind size</th>
+              <td class="table-light">Medium | "kosher salt" | Baratza setting 20</td>
+            </tr>
+            <tr class="temp">
+              <th>Water temperature</th>
+              <td class="table-light">90-96°C (194-205°F)</td>
+            </tr>
+            <tr class="ratio">
+              <th>Brew Ratio</th>
+              <td class="table-light">15:1</td>
+            </tr>
+            <tr class="amount invisible">
+              <th>Grind amount</th>
+              <td class="table-light"></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <section>
+        <h3>Instructions (standard)</h3>
+        <ol>
+		  <li>Spread and insert the filter into the brewer.</li>
+          <li>Wet the filter and pre-heat the vessel with hot water. Discard water.</li>
+          <li>Add grounds to the brewer.</li>
+		  <li>Saturate the grounds evenly with a 2:1 ratio of water.</li>
+		  <li>Wait 30 seconds for the grounds to bloom.</li>
+          <li>Pour water onto the grounds evenly, to the top of the brewer and topping off as needed.</li>
+          <li>Remove the brewer and allow it to drain.</li>
+        </ol>
+      </section>
+      <section>
+        <h3>Video</h3>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/qNTBD_gjViU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </section>
+      <section>
+        <h3>Notes</h3>
+        <ul>
+          <li><a href="https://www.stumptowncoffee.com/brew-guides/bee-house">"Bee House" (stumptowncoffee.com)</a></li>
+        </ul>
+      </section>
+      </div>
+      <div
+        class="tab-pane fade"
+        id="b-si"
+        role="tabpanel"
+        aria-labelledby="siphon content"
+      >
+      <section>
+        <table class="table specs">
+          <tbody>
+            <tr class="brewer_name">
+              <th>Brewer</th>
+              <td class="table-light">Siphon / Vacuum Brewer</td>
+            </tr>
+            <tr class="grind">
+              <th>Grind size</th>
+              <td class="table-light">Medium | "kosher salt" | Baratza setting 20</td>
+            </tr>
+            <tr class="temp">
+              <th>Water temperature</th>
+              <td class="table-light">Preheat to hot"</td>
+            </tr>
+            <tr class="ratio">
+              <th>Brew Ratio</th>
+              <td class="table-light">15:1</td>
+            </tr>
+            <tr class="amount invisible">
+              <th>Grind amount</th>
+              <td class="table-light"></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <section>
+        <h3>Instructions (standard)</h3>
+        <ol>
+		  <li>Place filter flat inside of upper chamber by affixing the spring catch to the bottom of the funnel.</li>
+          <li>Pour preheated water into lower chamber.</li>
+          <li>Ignite heater and apply to bottom chamber.</li>
+          <li>Once the water comes to a boil, fit the top chamber to the bottom and ensure a seal at the gasket.</li>
+          <li>Once almost all the water reaches the top chamber, gently stir in the grounds.</li>
+          <li>Reduce heat to a simmer.</li>
+          <li>Wait 40 seconds and stir again.</li>
+          <li>Wait another 50 seconds, then turn off and remove heater.</li>
+          <li>Allow the slurry to filter down completely into the bottom chamber.</li>
+        </ol>
+      </section>
+      <section>
+        <h3>Video</h3>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/qvYkWaw1B38" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </section>
+      <section>
+        <h3>Notes</h3>
+        <ul>
+          <li><a href="http://coffeegeek.com/guides/siphoncoffee">"Siphon Coffee How To" (coffeegeek.com)</a></li>
+        </ul>
+      </section>
+      </div>
+      <div
+        class="tab-pane fade"
+        id="b-ku"
+        role="tabpanel"
+        aria-labelledby="kureg content"
+      >
+        <h1><u>NOPE</u></h1>
+      </div>
+    </div>
+    <!-- Tab content -->
+  </section>
+  </div>
+</div>
+
+  
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+</body>
+</html>
+
